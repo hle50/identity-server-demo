@@ -9,9 +9,9 @@ namespace IdentityServer.Core.Data
         {
                 new Client
                 {
-                    ClientId = "identity-server-demo-web",
+                    ClientId = "yu-1",
                     AllowedGrantTypes = new List<string> { GrantType.AuthorizationCode },
-                    RequireClientSecret = false,
+                    RequireClientSecret = true,
                     RequireConsent = false,
                     RedirectUris = new List<string> { "http://localhost:3006/signin-callback.html" },
                     PostLogoutRedirectUris = new List<string> { "http://localhost:3006/" },
@@ -19,12 +19,27 @@ namespace IdentityServer.Core.Data
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "identity-server-demo-api", "write", "read", "openid", "profile", "email" },
+                    AllowedScopes = { "yu-api", "write", "read", "openid", "profile", "email" },
                     AllowedCorsOrigins = new List<string>
                     {
                         "http://localhost:3006",
                     },
                     AccessTokenLifetime = 86400
+                },
+
+                 new Client
+                {
+                    ClientId = "yu-2",
+                    AllowedGrantTypes = new List<string> { GrantType.ResourceOwnerPassword },
+                    RequireClientSecret = true,
+                    RequireConsent = false,                  
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    AllowedScopes = { "yu-api", "write", "read", "openid", "profile", "email" },
+                    AccessTokenLifetime = 86400,
+                    
                 }
         };
 
@@ -32,8 +47,8 @@ namespace IdentityServer.Core.Data
         {
             new ApiResource
             {
-                Name = "identity-server-demo-api",
-                DisplayName = "Identity Server Demo API",
+                Name = "yu-api",
+                DisplayName = "Yu API",
                 Scopes = new List<string>
                 {
                     "write",
@@ -49,7 +64,7 @@ namespace IdentityServer.Core.Data
             new ApiScope("email"),
             new ApiScope("read"),
             new ApiScope("write"),
-            new ApiScope("identity-server-demo-api")
+            new ApiScope("yu-api")
         };
     }
 }
