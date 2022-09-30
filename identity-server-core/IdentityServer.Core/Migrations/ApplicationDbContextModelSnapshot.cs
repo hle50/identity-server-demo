@@ -52,6 +52,9 @@ namespace IdentityServer.Core.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
+                    b.Property<int?>("OrganizationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -82,6 +85,36 @@ namespace IdentityServer.Core.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("IdentityServer.Core.Models.Organization", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastUpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastUpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Organizations");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

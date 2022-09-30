@@ -1,5 +1,6 @@
 using IdentityServer.Core.Data;
 using IdentityServer.Core.Models;
+using IdentityServer.Core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -36,6 +37,7 @@ namespace IdentityServer.Core
                 .AddDefaultTokenProviders();
 
             services.AddIdentityServer()
+                //.AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddDeveloperSigningCredential()
                 .AddAspNetIdentity<ApplicationUser>()
                 .AddConfigurationStore(options =>
@@ -45,7 +47,10 @@ namespace IdentityServer.Core
                 .AddOperationalStore(options =>
                 {
                     options.ConfigureDbContext = b => b.UseSqlServer(connectionString, sql => sql.MigrationsAssembly(migrationAssembly));
-                });
+                })
+                .AddProfileService<ProfileService>()
+                ;
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

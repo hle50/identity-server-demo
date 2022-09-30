@@ -1,10 +1,26 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityModel;
+using IdentityServer4.Models;
 using System.Collections.Generic;
 
 namespace IdentityServer.Core.Data
 {
     public static class Config
     {
+        public static List<IdentityResource> GetIdentityResources()
+        {
+            // Claims automatically included in OpenId scope
+            var openIdScope = new IdentityResources.OpenId();
+            openIdScope.UserClaims.Add(JwtClaimTypes.Locale);
+
+            // Available scopes
+            return new List<IdentityResource>
+  {
+    openIdScope,
+    new IdentityResources.Profile(),
+    new IdentityResources.Email(),
+   
+  };
+        }
         public static List<Client> Clients = new List<Client>
         {
                 new Client

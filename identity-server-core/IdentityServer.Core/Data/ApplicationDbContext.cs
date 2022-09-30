@@ -6,6 +6,7 @@ namespace IdentityServer.Core.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Organization> Organizations { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
